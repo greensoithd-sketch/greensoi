@@ -1,0 +1,586 @@
+/* ===== BẢNG MÀU CHUNG CỦA WEBSITE =====
+   Chỉ cần đổi mã màu ở đây, toàn bộ website sẽ đổi theo */
+:root {
+  --mau-chinh: #2e7d32;      /* màu chủ đạo: nút bấm, footer, tiêu đề */
+  --mau-chinh-dam: #1b5e20;  /* màu đậm hơn: dùng khi rê chuột vào nút */
+  --mau-nen-nhat: #f1f8e9;   /* nền xanh rất nhạt: dùng cho các khung nền */
+  --mau-chu: #333333;        /* màu chữ thường */
+}
+
+
+/* Xóa khoảng cách mặc định của trình duyệt, tính kích thước gồm cả viền */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Font chữ, màu chữ và độ giãn dòng chung cho cả trang */
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Header: logo bên trái, menu bên phải, dính trên cùng khi cuộn */
+.header {
+  display: flex;                      /* xếp các phần tử theo hàng ngang */
+  justify-content: space-between;     /* logo một bên, menu một bên */
+  align-items: center;                /* căn giữa theo chiều dọc */
+  padding: 10px 5%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,.1);  /* đổ bóng nhẹ phía dưới */
+  position: sticky;                   /* dính khi cuộn trang */
+  top: 0;
+  z-index: 10;                        /* luôn nằm trên các phần khác */
+}
+
+/* Chiều cao logo */
+.logo img { height: 50px; }
+
+/* Menu: các liên kết xếp ngang, cách nhau 20px */
+.menu { display: flex; gap: 20px; }
+.menu a { text-decoration: none; color: #333; font-weight: bold; }
+/* Đổi màu khi rê chuột vào (màu tạm, sẽ đổi theo logo) */
+.menu a:hover { color: #2e7d32; }
+
+/* Banner: ảnh full chiều ngang, slogan nằm đè lên */
+.banner { position: relative; }
+.banner img { width: 100%; display: block; }
+.slogan {
+  position: absolute;                 /* đặt tự do bên trong banner */
+  bottom: 20px;
+  left: 5%;
+  color: #fff;
+  font-size: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,.6);  /* viền bóng giúp chữ dễ đọc */
+}
+
+/* Khung nội dung chính, tiêu đề mục */
+.container { padding: 40px 5%; }
+.container h2 { margin-bottom: 20px; }
+
+/* Lưới sản phẩm: tự chia cột, mỗi thẻ rộng tối thiểu 220px */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* Chân trang: nền màu, chữ trắng, căn giữa */
+.footer {
+  background: #2e7d32;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+} 
+
+/* Màu chữ chung của cả trang */
+body { color: var(--mau-chu); }
+
+/* Màu liên kết menu khi rê chuột vào */
+.menu a:hover { color: var(--mau-chinh); }
+
+/* Nền chân trang theo màu chủ đạo */
+.footer { background: var(--mau-chinh); } 
+
+/* Banner: nền cùng tông với ảnh để lấp chỗ trống hai bên nếu có */
+.banner {
+  position: relative;          /* để slogan đặt đè lên được */
+  background: #f3f4e9;         /* màu nền cùng tông với ảnh banner */
+  text-align: center;          /* căn ảnh ra giữa khi ảnh không chiếm hết bề ngang */
+}
+
+/* Ảnh banner: luôn hiển thị trọn vẹn, không bị cắt */
+.banner img {
+  display: block;              /* bỏ khe hở nhỏ dưới ảnh */
+  width: 100%;                 /* rộng bằng khung */
+  height: auto;                /* cao tự tính theo tỉ lệ gốc, không cắt */
+  max-height: 85vh;            /* không cao quá 85% màn hình (đổi số nếu muốn) */
+  object-fit: contain;         /* luôn thấy đủ cả ảnh, không crop */
+  margin: 0 auto;              /* căn giữa ảnh */
+}
+
+/* Slogan đè lên banner */
+.slogan {
+  position: absolute;          /* đặt tự do trong banner */
+  bottom: 20px;                /* cách mép dưới 20px */
+  left: 5%;                    /* cách mép trái 5% */
+  color: #fff;                 /* chữ trắng */
+  font-size: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,.6); /* bóng giúp chữ dễ đọc */
+} 
+
+/* Banner: khung bọc ngoài, không đặt chiều cao cố định */
+.banner {
+  background: #f3f4e9;   /* nền cùng tông với ảnh */
+  line-height: 0;        /* bỏ khe hở nhỏ dưới ảnh */
+}
+
+/* Ảnh banner: rộng hết khung, cao tự tính theo tỉ lệ gốc */
+.banner img {
+  display: block;        /* bỏ khoảng trắng mặc định dưới ảnh */
+  width: 100%;           /* rộng bằng khung */
+  height: auto;          /* giữ đúng tỉ lệ, không bị cắt */
+} 
+
+/* Căn các mục trong menu thẳng hàng giữa theo chiều dọc (để icon không bị lệch) */
+.menu { align-items: center; }
+
+/* Nút admin: khung chứa icon ổ khóa */
+.admin-btn {
+  display: flex;                 /* để icon nằm giữa khung */
+  align-items: center;
+  justify-content: center;
+  width: 36px;                   /* kích thước khung tròn */
+  height: 36px;
+  border-radius: 50%;            /* bo tròn thành hình tròn */
+  color: var(--mau-chu);         /* màu icon bình thường: giống màu chữ */
+  opacity: .7;                   /* hơi mờ để kín đáo, không lấn át menu */
+  transition: all .2s;           /* chuyển màu mượt khi rê chuột */
+}
+
+/* Khi rê chuột vào: icon đổi sang màu xanh chủ đạo, nền xanh nhạt */
+.admin-btn:hover {
+  color: var(--mau-chinh);
+  background: var(--mau-nen-nhat);
+  opacity: 1;
+} 
+
+/* Thẻ sản phẩm */
+.product-card {
+  display: flex;
+  gap: 24px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  max-width: 560px;
+  transition: transform .2s, box-shadow .2s;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Ảnh */
+.product-card img {
+  width: 190px;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Nhãn "Mới" */
+.product-badge {
+  display: inline-block;
+  padding: 3px 12px;
+  background: #ff5252;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 999px;
+}
+
+/* Tên sản phẩm */
+.product-title {
+  display: block;
+  margin: 8px 0 4px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1b5e20;
+  text-decoration: none;
+}
+.product-title:hover { color: #43a047; }
+
+/* Giá */
+.product-price {
+  margin: 10px 0 16px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #e53935;
+}
+
+/* Ô số lượng */
+.product-card input[type="number"] {
+  width: 70px;
+  padding: 8px;
+  border: 2px solid #c8e6c9;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 15px;
+  outline: none;
+}
+.product-card input[type="number"]:focus { border-color: #43a047; }
+
+/* Nút thêm vào giỏ */
+.add-to-cart {
+  display: block;
+  margin-top: 10px;
+  padding: 10px 22px;
+  background: linear-gradient(135deg, #43a047, #2e7d32);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+}
+.add-to-cart:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(46, 125, 50, 0.4);
+}
+.add-to-cart:active { transform: translateY(0); } 
+
+.add-to-cart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #4caf50, #2e9e5b);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.add-to-cart:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(76, 175, 80, 0.45);
+  filter: brightness(1.05);
+}
+
+.add-to-cart:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(76, 175, 80, 0.3);
+}
+
+.add-to-cart:focus-visible {
+  outline: 3px solid rgba(76, 175, 80, 0.4);
+  outline-offset: 2px;
+} 
+
+.add-to-cart {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px 16px;
+  background: #2e7d32;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+}
+
+.add-to-cart:hover {
+  background: #256b29;
+  box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);
+}
+
+.add-to-cart:active {
+  transform: scale(0.97);
+} 
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+/* Quan trọng: nút và ô nhập mặc định KHÔNG tự ăn font của body */
+button, input, select, textarea {
+  font-family: inherit;
+} 
+
+.add-to-cart {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #43a047, #2e7d32);
+  color: #fff;
+  border: none;
+  border-radius: 999px;          /* bo tròn dạng viên thuốc */
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.35);
+  transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
+}
+
+.add-to-cart:hover {
+  background: linear-gradient(135deg, #4caf50, #388e3c);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(46, 125, 50, 0.45);
+}
+
+.add-to-cart:active {
+  transform: translateY(0) scale(0.97);
+} 
+
+.product-card button,
+button[type="button"],
+button {
+  font-family: inherit;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #43a047, #2e7d32) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.35);
+} 
+
+.product-card {
+  max-width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+*, *::before, *::after { box-sizing: border-box; } 
+
+
+.gt-hero {
+  min-height: 0 !important;          /* bỏ 380px cố định */
+  aspect-ratio: 16 / 5 !important;   /* tỉ lệ khung = tỉ lệ ảnh banner */
+  background-size: 100% 100% !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+} 
+
+/* ===== GIỎ HÀNG (giao diện mới) ===== */
+
+/* Lớp nền mờ phủ toàn màn hình. Mặc định ẩn, JS đổi thành display:flex để hiện */
+.cart-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 30, 15, 0.55);
+  backdrop-filter: blur(3px);              /* làm mờ nội dung phía sau */
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 999;
+}
+
+/* Khung giỏ hàng: chia cột để phần đầu cố định, phần thân cuộn */
+.cart-box {
+  background: #fff;
+  width: 100%;
+  max-width: 560px;
+  max-height: 92vh;
+  border-radius: 20px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: cartPop .25s ease;            /* hiệu ứng bật lên khi mở */
+}
+@keyframes cartPop {
+  from { opacity: 0; transform: translateY(20px) scale(.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ----- Đầu khung ----- */
+.cart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  border-bottom: 1px solid #dfe8df;
+}
+.cart-head h2 { margin: 0; font-size: 22px; }
+
+/* Nút X tròn */
+.cart-x {
+  width: 36px; height: 36px;
+  border: none; border-radius: 50%;
+  background: #f1f8f2;
+  color: #6b7a6b;
+  font-size: 22px; line-height: 1;
+  cursor: pointer;
+  transition: .2s;
+}
+.cart-x:hover { background: #e3efe4; color: #1f2a1f; }
+
+/* ----- Thân khung (cuộn được) ----- */
+.cart-scroll {
+  padding: 8px 24px 24px;
+  overflow-y: auto;
+}
+
+/* Mỗi món: ảnh | thông tin | tiền + nút xoá */
+.cart-row {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px dashed #dfe8df;
+}
+.cart-row img {
+  width: 64px; height: 64px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.cart-row-name  { font-weight: 600; }
+.cart-row-price { color: #6b7a6b; font-size: 14px; margin-top: 2px; }
+
+/* Bộ tăng/giảm số lượng dạng viên thuốc */
+.cart-qty {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 8px;
+  border: 1px solid #dfe8df;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.cart-qty button {
+  width: 30px; height: 30px;
+  border: none;
+  background: #f1f8f2;
+  color: #2e7d32;
+  font-size: 16px;
+  cursor: pointer;
+}
+.cart-qty button:hover { background: #dcedde; }
+.cart-qty span { min-width: 34px; text-align: center; font-size: 14px; }
+
+/* Cột bên phải: nút xoá ở trên, thành tiền ở dưới */
+.cart-row-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+.cart-row-side strong { color: #2e7d32; }
+.cart-del {
+  border: none; background: none;
+  font-size: 18px;
+  cursor: pointer;
+  opacity: .6;
+}
+.cart-del:hover { opacity: 1; }
+
+/* Trạng thái giỏ trống */
+.cart-empty {
+  text-align: center;
+  padding: 28px 0;
+  color: #6b7a6b;
+}
+.cart-empty span { display: block; font-size: 44px; margin-bottom: 8px; }
+
+/* Dòng tổng tiền */
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: #f1f8f2;
+  border-radius: 12px;
+}
+.cart-total strong { font-size: 20px; color: #2e7d32; }
+
+/* ----- Form nhận hàng ----- */
+.cart-form {
+  margin-top: 20px;
+  display: grid;
+  gap: 12px;
+}
+.cart-form h3 { margin: 0; font-size: 16px; }
+.cart-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.cart-opt { font-weight: 400; color: #6b7a6b; }
+.cart-form input,
+.cart-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 14px;
+  border: 1.5px solid #dfe8df;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 400;
+  background: #fff;
+  transition: .2s;
+}
+.cart-form textarea { resize: vertical; }
+/* Viền xanh + vòng sáng khi đang nhập */
+.cart-form input:focus,
+.cart-form textarea:focus {
+  outline: none;
+  border-color: #388e3c;
+  box-shadow: 0 0 0 4px rgba(56, 142, 60, 0.15);
+}
+
+/* Khối thanh toán COD */
+.cart-cod {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 16px;
+  border: 1.5px solid #388e3c;
+  background: #f1f8f2;
+  border-radius: 12px;
+}
+.cart-cod-icon { font-size: 26px; }
+.cart-cod small { display: block; color: #6b7a6b; margin-top: 2px; font-weight: 400; }
+
+/* Nút chính: nổi bật */
+.cart-btn-main {
+  padding: 14px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #388e3c, #2e7d32);
+  color: #fff;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
+  transition: .2s;
+}
+.cart-btn-main:hover { transform: translateY(-1px); }
+.cart-btn-main:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+/* Nút phụ: chỉ có viền để tránh bấm nhầm */
+.cart-btn-sub {
+  padding: 12px;
+  border: 1.5px solid #dfe8df;
+  border-radius: 999px;
+  background: #fff;
+  color: #6b7a6b;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .2s;
+}
+.cart-btn-sub:hover { border-color: #388e3c; color: #2e7d32; }
+
+/* Điện thoại */
+@media (max-width: 480px) {
+  .cart-head { padding: 14px 16px; }
+  .cart-scroll { padding: 8px 16px 20px; }
+  .cart-row { grid-template-columns: 56px 1fr auto; }
+  .cart-row img { width: 56px; height: 56px; }
+} 
+
+/* Sau khi xóa banner giới thiệu: giảm khoảng trống phía trên phần câu chuyện */
+#gioi-thieu > .gt-wrap:first-child {
+  padding-top: 40px;   /* mặc định là 64px, chỉnh số này nếu muốn rộng/hẹp hơn */
+}
+
+/* Dự phòng: nếu còn sót khối banner cũ thì ẩn đi, không ảnh hưởng chức năng khác */
+.gt-hero {
+  display: none !important;
+}

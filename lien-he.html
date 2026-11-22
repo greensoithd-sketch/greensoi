@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!-- Khai báo đây là tài liệu HTML5 -->
+<html lang="vi">
+<head>
+  <!-- Bảng mã UTF-8 để hiển thị đúng tiếng Việt có dấu -->
+  <meta charset="UTF-8">
+  <!-- Giúp trang hiển thị vừa khít màn hình điện thoại -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Tiêu đề hiện trên tab trình duyệt -->
+  <title>Liên hệ - Đất sinh học</title>
+
+  <!-- CSS chung của website (header, menu, font...) -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- CSS riêng của trang liên hệ -->
+  <link rel="stylesheet" href="css/lien-he.css">
+
+  <!-- Font chữ giống trang chủ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ===== HEADER: thanh đầu trang gồm logo và menu (giống trang chủ) ===== -->
+  <header class="header">
+    <!-- Logo: bấm vào quay về trang chủ -->
+    <a href="index.html" class="logo">
+      <img src="images/Logo-Green.png" alt="Logo">
+    </a>
+
+    <!-- Menu điều hướng: thứ tự giống trang chủ -->
+    <nav class="menu">
+      <!-- MỚI: Trang chủ - quay về đầu trang index.html -->
+      <a href="index.html">Trang chủ</a>
+      <!-- SỬA: Giới thiệu giờ nằm ở trang chủ nên trỏ tới index.html#gioi-thieu -->
+      <a href="index.html#gioi-thieu">Giới thiệu</a>
+      <!-- Sản phẩm: phải ghi index.html#san-pham vì đang ở trang khác -->
+      <a href="index.html#san-pham">Sản phẩm</a>
+      <!-- Liên hệ: trang hiện tại -->
+      <a href="lien-he.html">Liên hệ</a>
+
+      <!-- ĐÃ XÓA: mục "Giỏ hàng" theo yêu cầu -->
+
+      <!-- Icon ổ khóa vào trang admin (giữ nguyên) -->
+      <a href="admin-login.html" class="admin-btn" title="Quản trị" aria-label="Vào trang quản trị">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"
+             stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <!-- Thân ổ khóa -->
+          <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+          <!-- Quai ổ khóa -->
+          <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+        </svg>
+      </a>
+    </nav>
+  </header>
+
+  <!-- ===== NỘI DUNG TRANG LIÊN HỆ ===== -->
+  <main class="contact-page">
+    <!-- Tiêu đề chính của trang -->
+    <h1>Liên hệ với chúng tôi</h1>
+
+    <!-- Khung chia 2 cột: thông tin liên hệ (trái) và form (phải) -->
+    <div class="contact-grid">
+
+      <!-- Cột trái: thông tin liên hệ, lien-he.js sẽ đổ dữ liệu từ Supabase vào -->
+      <section class="contact-info" aria-labelledby="info-title">
+        <h2 id="info-title">Thông tin liên hệ</h2>
+        <ul id="contact-list">
+          <li>Đang tải...</li>
+        </ul>
+      </section>
+
+      <!-- Cột phải: form gửi tin nhắn -->
+      <section class="contact-form-box" aria-labelledby="form-title">
+        <h2 id="form-title">Gửi tin nhắn</h2>
+
+        <form id="contact-form" novalidate>
+          <!-- Ô nhập họ tên -->
+          <label for="full_name">Họ tên</label>
+          <input type="text" id="full_name" maxlength="100" required>
+
+          <!-- Ô nhập số điện thoại -->
+          <label for="phone">Số điện thoại</label>
+          <input type="tel" id="phone" maxlength="20" required>
+
+          <!-- Ô nhập email -->
+          <label for="email">Email</label>
+          <input type="email" id="email" maxlength="150" required>
+
+          <!-- Ô nhập nội dung tin nhắn -->
+          <label for="message">Nội dung tin nhắn</label>
+          <textarea id="message" rows="5" maxlength="2000" required></textarea>
+
+          <!-- Nút gửi tin nhắn -->
+          <button type="submit" id="submit-btn">Gửi tin nhắn</button>
+
+          <!-- Thông báo thành công / lỗi do lien-he.js hiển thị -->
+          <p id="form-status" role="status"></p>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Thư viện Supabase: PHẢI nằm trên lien-he.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- JavaScript riêng của trang liên hệ (tải thông tin liên hệ và xử lý gửi form) -->
+  <script src="js/lien-he.js"></script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<!-- Khai báo đây là tài liệu HTML5 -->
+<html lang="vi"> <!-- Ngôn ngữ của trang: tiếng Việt -->
+<head>
+  <!-- Bảng mã UTF-8 để hiển thị đúng tiếng Việt có dấu -->
+  <meta charset="UTF-8">
+  <!-- Giúp trang hiển thị vừa khít màn hình điện thoại -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Tiêu đề hiện trên tab trình duyệt (tên thương hiệu Green Soil) -->
+  <title>Green Soil - Đất sinh học</title>
+  <!-- Favicon: icon nhỏ hiển thị trên tab trình duyệt (dùng logo Green Soil) -->
+  <link rel="icon" type="image/png" href="images/Logo-Green.png">
+  <!-- Nhúng file CSS để định dạng giao diện -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Kết nối trước tới Google Fonts để tải font nhanh hơn -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Font Be Vietnam Pro (hỗ trợ tiếng Việt đẹp) -->
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Cuộn mượt khi bấm menu Trang chủ / Giới thiệu / Sản phẩm */
+    html { scroll-behavior: smooth; }
+
+    /* Chừa khoảng trống phía trên khi cuộn tới, vì header dính (sticky) sẽ che tiêu đề
+       MỚI: thêm #home vào danh sách này */
+    #home,
+    #gioi-thieu,
+    #san-pham { scroll-margin-top: 80px; } /* chỉnh số này nếu vẫn bị che */
+
+    /* MỚI: mục menu đang được chọn (do main.js tự gán class "active" khi cuộn trang)
+       Đổi màu xanh, chữ đậm và gạch chân để người xem biết đang ở phần nào */
+    .menu a.active {
+      color: #2e7d32;                    /* xanh lá giống màu chủ đạo của trang */
+      font-weight: 700;                  /* chữ đậm hơn */
+      border-bottom: 2px solid #2e7d32;  /* gạch chân dưới mục đang chọn */
+    }
+
+    /* ===== Style của phần Giới thiệu (chuyển từ gioi-thieu.html sang) =====
+       Các class bắt đầu bằng gt- chỉ dành cho phần Giới thiệu, không đụng style.css */
+
+    /* Khung banner đầu phần giới thiệu: nền xám xanh trùng màu ảnh banner */
+    .gt-hero { position:relative; min-height:380px; display:flex; align-items:center; justify-content:center;
+      text-align:center; color:#fff; background-color:#94a691; background-size:cover;
+      background-position:center; background-repeat:no-repeat; }
+    /* Lớp phủ tối nhẹ để chữ dễ đọc trên ảnh */
+    .gt-hero::before { content:""; position:absolute; inset:0; background:rgba(0,40,10,.4); }
+    /* Phần chữ nằm trên lớp phủ */
+    .gt-hero-inner { position:relative; max-width:760px; padding:60px 24px; }
+    .gt-hero h1 { font-size:2.6rem; margin:0 0 12px; line-height:1.25; }
+    .gt-hero p  { font-size:1.15rem; margin:0 0 28px; opacity:.95; }
+    /* Nút "Xem sản phẩm" trong banner */
+    .gt-btn { display:inline-block; background:#fff; color:#2e7d32; font-weight:600; padding:14px 32px;
+      border-radius:999px; text-decoration:none; box-shadow:0 6px 16px rgba(0,0,0,.2); transition:transform .2s; }
+    .gt-btn:hover { transform:translateY(-2px); }
+
+    /* Khung nội dung chung, căn giữa và giới hạn chiều rộng */
+    .gt-wrap { max-width:1100px; margin:0 auto; padding:64px 24px; }
+    .gt-title { text-align:center; color:#2e7d32; font-size:1.9rem; margin:0 0 36px; }
+
+    /* Phần câu chuyện: 2 cột (ảnh + chữ); no-img = chỉ có chữ ở giữa */
+    .gt-story { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; }
+    .gt-story.no-img { grid-template-columns:1fr; max-width:760px; margin:0 auto; }
+    .gt-story img { width:100%; border-radius:20px; box-shadow:0 10px 28px rgba(0,0,0,.12); }
+    .gt-story h2 { color:#2e7d32; font-size:1.8rem; margin:0 0 16px; }
+    .gt-story p  { line-height:1.8; white-space:pre-line; margin:0; }
+
+    /* Phần giá trị cốt lõi: nền xanh nhạt, 3 thẻ ngang hàng */
+    .gt-values-bg { background:#f3f8f3; }
+    .gt-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+    .gt-card { background:#fff; border-radius:20px; padding:32px 24px; text-align:center;
+      box-shadow:0 6px 20px rgba(0,0,0,.07); transition:transform .25s; }
+    .gt-card:hover { transform:translateY(-6px); }
+    .gt-icon { font-size:2.8rem; margin-bottom:12px; }
+    .gt-card h3 { color:#2e7d32; margin:0 0 10px; }
+    .gt-card p  { margin:0; line-height:1.6; }
+
+    /* Màn hình điện thoại: xếp các cột thành 1 cột */
+    @media (max-width:760px) {
+      .gt-story, .gt-grid { grid-template-columns:1fr; }
+      .gt-hero h1 { font-size:2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER: thanh đầu trang gồm logo và menu ===== -->
+  <header class="header">
+    <!-- Logo: bấm vào sẽ quay về trang chủ -->
+    <a href="index.html" class="logo">
+      <!-- Logo Green Soil; alt mô tả ảnh (tốt cho SEO) -->
+      <img src="images/Logo-Green.png" alt="Green Soil - Canh tác bền vững, giữ trọn màu xanh">
+    </a>
+
+    <!-- Menu điều hướng -->
+    <nav class="menu">
+      <!-- MỚI: Trang chủ - cuộn về đầu trang (banner GREEN SOIL). Là mục đầu tiên của menu -->
+      <a href="#home">Trang chủ</a>
+      <!-- Giới thiệu: cuộn xuống phần Giới thiệu ngay trên trang chủ -->
+      <a href="#gioi-thieu">Giới thiệu</a>
+      <!-- Sản phẩm: cuộn xuống khu vực sản phẩm (nằm dưới phần Giới thiệu) -->
+      <a href="#san-pham">Sản phẩm</a>
+      <!-- Liên hệ: mở trang riêng lien-he.html (giữ nguyên) -->
+      <a href="lien-he.html">Liên hệ</a>
+
+      <!-- NÚT VÀO TRANG ADMIN: chỉ là icon ổ khóa, bấm sẽ mở trang admin-login.html -->
+      <a href="admin-login.html" class="admin-btn" title="Quản trị" aria-label="Vào trang quản trị">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"
+             stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <!-- Thân ổ khóa -->
+          <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+          <!-- Quai ổ khóa -->
+          <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+        </svg>
+      </a>
+    </nav>
+  </header>
+
+  <!-- ===== BANNER: chỉ có ảnh, slogan đã nằm sẵn trong ảnh =====
+       MỚI: thêm id="home" để mục "Trang chủ" trên menu cuộn về đây -->
+  <section class="banner" id="home">
+    <img src="images/Banner-Green.png" alt="Banner Green Soil">
+  </section>
+
+  <!-- ===== NỘI DUNG CHÍNH ===== -->
+  <main>
+
+    <!-- ===== 1. GIỚI THIỆU (chuyển từ gioi-thieu.html xuống đây; id để menu cuộn tới) ===== -->
+    <section id="gioi-thieu">
+
+      <!-- 1a. Banner giới thiệu: chữ được main.js điền vào theo thuộc tính data-about.
+           Nếu không muốn banner thứ hai này, xóa cả khối <div class="gt-hero"> đến </div> tương ứng -->
+      <div class="gt-hero" id="gt-hero">
+        <div class="gt-hero-inner">
+          <h1 data-about="about_banner_title"></h1>
+          <p data-about="about_banner_subtitle"></p>
+          <a class="gt-btn" id="gt-btn" href="#san-pham" data-about="about_banner_btn_text"></a>
+        </div>
+      </div>
+
+      <!-- Gán ảnh banner giới thiệu đã lưu từ lần trước ngay lập tức (đỡ bị nháy nền) -->
+      <script>
+        try {
+          var cb = localStorage.getItem('gt_banner_url');
+          if (cb) document.getElementById('gt-hero').style.backgroundImage = 'url("' + cb + '")';
+        } catch (e) {}
+      </script>
+
+      <!-- 1b. Câu chuyện thương hiệu: có ảnh thì chia 2 cột, không có thì chỉ hiện chữ -->
+      <div class="gt-wrap">
+        <div class="gt-story no-img" id="gt-story">
+          <img id="gt-story-img" alt="Câu chuyện thương hiệu" style="display:none;">
+          <div>
+            <h2 data-about="about_story_title"></h2>
+            <p data-about="about_story_text"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1c. Giá trị cốt lõi (3 thẻ) -->
+      <div class="gt-values-bg">
+        <div class="gt-wrap">
+          <h2 class="gt-title" data-about="about_values_title"></h2>
+          <div class="gt-grid">
+            <!-- Thẻ 1 -->
+            <div class="gt-card"><div class="gt-icon" data-about="about_v1_icon"></div><h3 data-about="about_v1_title"></h3><p data-about="about_v1_desc"></p></div>
+            <!-- Thẻ 2 -->
+            <div class="gt-card"><div class="gt-icon" data-about="about_v2_icon"></div><h3 data-about="about_v2_title"></h3><p data-about="about_v2_desc"></p></div>
+            <!-- Thẻ 3 -->
+            <div class="gt-card"><div class="gt-icon" data-about="about_v3_icon"></div><h3 data-about="about_v3_title"></h3><p data-about="about_v3_desc"></p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 2. SẢN PHẨM: nằm dưới phần Giới thiệu (id="san-pham" để menu cuộn tới) ===== -->
+    <section id="san-pham" class="container">
+      <h2>Sản phẩm</h2>
+      <!-- Danh sách sản phẩm: JavaScript sẽ tự đổ dữ liệu vào đây -->
+      <div id="product-list" class="product-grid"></div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER: chân trang, thông tin liên hệ (lấy từ tab "Liên hệ" bên admin) ===== -->
+  <footer id="lien-he" class="footer">
+    <!-- Nội dung liên hệ: main.js tự điền vào theo data-content="contact" -->
+    <p data-content="contact" style="white-space:pre-line;"></p>
+    <!-- Hotline và địa chỉ: main.js tự điền vào theo data-content -->
+    <p>Hotline: <span data-content="hotline">0xxx xxx xxx</span> | Địa chỉ: <span data-content="address">...</span></p>
+  </footer>
+
+  <!-- Thư viện Supabase: PHẢI nằm trên main.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Nhúng file JavaScript (đặt cuối để trang tải xong rồi mới chạy) -->
+  <script src="js/main.js"></script>
+</body>
+</html>

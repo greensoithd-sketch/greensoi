@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!-- Khai báo đây là tài liệu HTML5 -->
+<html lang="vi">
+<head>
+  <!-- Bảng mã UTF-8 để hiển thị đúng tiếng Việt có dấu -->
+  <meta charset="UTF-8">
+  <!-- Giúp trang hiển thị vừa khít màn hình điện thoại -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Tiêu đề hiện trên tab trình duyệt -->
+  <title>Đăng nhập quản trị - Green Soil</title>
+  <!-- MỚI: favicon, icon nhỏ trên tab trình duyệt (dùng logo Green Soil) -->
+  <link rel="icon" type="image/png" href="images/Logo-Green.png">
+
+  <!-- Thư viện Supabase (dùng để đăng nhập) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    /* Nền toàn trang, căn form ra giữa màn hình */
+    body {
+      margin: 0; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background: #f3f5ea; font-family: Arial, sans-serif;
+    }
+    /* Khung form đăng nhập */
+    .login-box {
+      background: #fff; padding: 32px; width: 100%; max-width: 360px;
+      border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,.1);
+    }
+    /* MỚI: logo ở đầu form, căn giữa, giữ đúng tỉ lệ ảnh */
+    .login-logo {
+      display: block;       /* để căn giữa bằng margin auto */
+      height: 90px;         /* chỉnh to/nhỏ logo tại đây */
+      width: auto;          /* giữ tỉ lệ, không bị méo */
+      margin: 0 auto 16px;  /* căn giữa ngang, cách tiêu đề 16px */
+    }
+    .login-box h2 { margin: 0 0 20px; color: #3b6b35; text-align: center; }
+    /* Ô nhập email, mật khẩu */
+    .login-box input {
+      width: 100%; padding: 10px 12px; margin-bottom: 14px;
+      border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box;
+    }
+    /* Nút đăng nhập */
+    .login-box button {
+      width: 100%; padding: 11px; border: 0; border-radius: 8px;
+      background: #3b6b35; color: #fff; font-size: 16px; cursor: pointer;
+    }
+    /* Nút bị khóa khi đang xử lý đăng nhập */
+    .login-box button:disabled { opacity: .6; cursor: wait; }
+    /* Dòng báo lỗi */
+    #msg { color: #c0392b; font-size: 14px; min-height: 18px; margin-bottom: 8px; }
+    /* Link quay về trang chủ */
+    .back { display: block; text-align: center; margin-top: 14px; font-size: 14px; color: #666; }
+  </style>
+</head>
+<body>
+  <!-- Khung form đăng nhập -->
+  <div class="login-box">
+    <!-- MỚI: logo Green Soil, bấm vào sẽ về trang chủ -->
+    <a href="index.html">
+      <img class="login-logo" src="images/Logo-Green.png" alt="Green Soil - Canh tác bền vững, giữ trọn màu xanh">
+    </a>
+    <!-- Tiêu đề form -->
+    <h2>Quản trị Green Soil</h2>
+    <!-- Nơi hiện thông báo lỗi -->
+    <div id="msg"></div>
+    <!-- Ô nhập email admin -->
+    <input type="email" id="email" placeholder="Email admin" autocomplete="username">
+    <!-- Ô nhập mật khẩu -->
+    <input type="password" id="password" placeholder="Mật khẩu" autocomplete="current-password">
+    <!-- Nút đăng nhập -->
+    <button id="btn-login">Đăng nhập</button>
+    <!-- Link quay về trang chủ -->
+    <a class="back" href="index.html">← Về trang chủ</a>
+  </div>
+
+  <script>
+    // 1. Kết nối Supabase (dùng cùng URL và anon key với admin.js của bạn)
+    const SUPABASE_URL = 'https://aynmosrddjceqexblqeo.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_T7sRdOKCm3ZKQJZWyGxMmg_5XB1yE59';
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Lấy sẵn 2 phần tử hay dùng: dòng báo lỗi và nút đăng nhập
+    const msg = document.getElementById('msg');
+    const btn = document.getElementById('btn-login');
+
+    // 2. Hàm kiểm tra tài khoản có nằm trong danh sách admin không
+    async function isAdmin(userId) {
+      const { data } = await db
+        .from('admins')          // bảng lưu danh sách admin
+        .select('user_id')
+        .eq('user_id', userId)
+        .maybeSingle();
+      return !!data;             // có dòng dữ liệu = là admin
+    }
+
+    // 3. Nếu đã đăng nhập sẵn và là admin thì vào thẳng trang quản trị
+    (async () => {
+      const { data: { session } } = await db.auth.getSession();
+      if (session && await isAdmin(session.user.id)) {
+        location.href = 'admin.html';
+      }
+    })();
+
+    // 4. Xử lý khi bấm nút Đăng nhập
+    async function login() {
+      msg.textContent = '';      // xóa thông báo lỗi cũ
+      btn.disabled = true;       // khóa nút để tránh bấm nhiều lần
+
+      // Lấy email và mật khẩu người dùng nhập
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      // Đăng nhập bằng email + mật khẩu
+      const { data, error } = await db.auth.signInWithPassword({ email, password });
+      if (error) {
+        msg.textContent = 'Email hoặc mật khẩu không đúng.';
+        btn.disabled = false;
+        return;
+      }
+
+      // Đăng nhập được nhưng không phải admin thì đăng xuất ngay
+      if (!(await isAdmin(data.user.id))) {
+        await db.auth.signOut();
+        msg.textContent = 'Tài khoản này không có quyền quản trị.';
+        btn.disabled = false;
+        return;
+      }
+
+      // Đúng admin thì chuyển sang trang quản trị
+      location.href = 'admin.html';
+    }
+
+    // Bấm nút thì đăng nhập
+    btn.addEventListener('click', login);
+    // Cho phép bấm Enter để đăng nhập
+    document.getElementById('password').addEventListener('keydown', e => {
+      if (e.key === 'Enter') login();
+    });
+  </script>
+</body>
+</html>

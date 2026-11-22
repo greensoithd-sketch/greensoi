@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <!-- Giúp trang hiển thị đúng kích thước trên điện thoại -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi tiết sản phẩm - Green Soil</title>
+  <!-- CSS dùng chung của cả website (chứa các biến màu như --mau-chinh) -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* ===== Giao diện riêng của trang chi tiết (dùng lại biến màu trong style.css) ===== */
+
+    /* Khung bao ngoài toàn bộ nội dung trang: căn giữa, giới hạn chiều rộng */
+    .pd { max-width: 1100px; margin: 0 auto; padding: 32px 5% 64px; }
+
+    /* Đường dẫn "Trang chủ / Sản phẩm / Tên sản phẩm" */
+    .pd-crumbs { font-size: 14px; color: #777; margin-bottom: 24px; }
+    .pd-crumbs a { color: var(--mau-chinh); text-decoration: none; }
+    .pd-crumbs a:hover { text-decoration: underline; }
+
+    /* Chia 2 cột: bên trái là ảnh, bên phải là thông tin */
+    .pd-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* ----- Phần ảnh ----- */
+    /* Khung ảnh lớn: hình vuông, bo góc, nền xanh nhạt */
+    .pd-main-img {
+      aspect-ratio: 1 / 1;
+      border-radius: 16px;
+      background: var(--mau-nen-nhat);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    /* Ảnh nằm gọn trong khung, không bị cắt */
+    .pd-main-img img { width: 100%; height: 100%; object-fit: contain; }
+
+    /* Hàng ảnh nhỏ bên dưới ảnh lớn */
+    .pd-thumbs { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+    .pd-thumbs button {
+      width: 72px; height: 72px; padding: 0;
+      border: 2px solid transparent; border-radius: 10px;
+      overflow: hidden; cursor: pointer; background: var(--mau-nen-nhat);
+    }
+    .pd-thumbs button img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* Ảnh nhỏ đang được chọn sẽ có viền xanh */
+    .pd-thumbs button[aria-current="true"] { border-color: var(--mau-chinh); }
+
+    /* ----- Phần thông tin sản phẩm ----- */
+    /* Nhãn đỏ (ví dụ: "Mới") */
+    .pd-badge {
+      display: inline-block; padding: 3px 12px;
+      background: #ff5252; color: #fff;
+      font-size: 13px; font-weight: 600; border-radius: 999px;
+    }
+    /* Tên sản phẩm */
+    .pd h1 { font-size: 32px; line-height: 1.25; margin: 10px 0 8px; color: var(--mau-chinh-dam); }
+    /* Giá sản phẩm (màu đỏ, chữ đậm) */
+    .pd-price { font-size: 28px; font-weight: 800; color: #e53935; margin-bottom: 24px; }
+
+    /* Viền focus khi bấm Tab vào nút (hỗ trợ bàn phím) */
+    .pd button:focus-visible { outline: 3px solid rgba(76, 175, 80, .45); outline-offset: 2px; }
+
+    /* ----- Phần mô tả chi tiết ----- */
+    .pd-desc { margin-top: 48px; padding-top: 28px; border-top: 1px solid #e3ebe3; }
+    .pd-desc h2 { font-size: 22px; margin-bottom: 12px; }
+    /* pre-line: giữ nguyên các dòng xuống hàng trong mô tả */
+    .pd-desc p { max-width: 70ch; line-height: 1.75; white-space: pre-line; }
+
+    /* Thông báo (đang tải / lỗi / không tìm thấy) */
+    .pd-msg { text-align: center; padding: 80px 0; }
+    .pd-msg a { color: var(--mau-chinh); font-weight: bold; }
+
+    /* Giao diện điện thoại: chuyển về 1 cột */
+    @media (max-width: 800px) {
+      .pd-grid { grid-template-columns: 1fr; gap: 24px; }
+      .pd h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER: giống hệt trang chủ (đã bỏ mục Giỏ hàng) ===== -->
+  <header class="header">
+    <!-- Logo, bấm vào để về trang chủ -->
+    <a href="index.html" class="logo">
+      <img src="images/Logo-Green.png" alt="Logo">
+    </a>
+
+    <!-- Menu điều hướng -->
+    <nav class="menu">
+      <!-- MỚI: mục Trang chủ, bấm vào để về trang chủ -->
+      <a href="index.html">Trang chủ</a>
+      <a href="index.html#san-pham">Sản phẩm</a>
+      <a href="index.html#gioi-thieu">Giới thiệu</a>
+      <a href="#lien-he">Liên hệ</a>
+
+      <!-- Biểu tượng ổ khóa: vào trang quản trị -->
+      <a href="admin-login.html" class="admin-btn" title="Quản trị" aria-label="Vào trang quản trị">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"
+             stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+          <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+        </svg>
+      </a>
+    </nav>
+  </header>
+
+  <!-- ===== NỘI DUNG: JavaScript bên dưới sẽ đổ sản phẩm vào đây ===== -->
+  <main id="product-detail" class="pd">
+    <p class="pd-msg">Đang tải sản phẩm...</p>
+  </main>
+
+  <!-- ===== FOOTER: giống hệt trang chủ ===== -->
+  <footer id="lien-he" class="footer">
+    <p data-content="contact" style="white-space:pre-line;"></p>
+    <p>Hotline: <span data-content="hotline">0xxx xxx xxx</span> | Địa chỉ: <span data-content="address">...</span></p>
+  </footer>
+
+  <!-- Thư viện Supabase và main.js (nội dung footer dùng chung) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    /* =====================================================
+       Trang chi tiết sản phẩm
+       Dùng lại từ main.js: SUPABASE_URL, SUPABASE_KEY, esc(), formatPrice()
+       ===================================================== */
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Khung chứa nội dung sản phẩm
+      const box = document.getElementById('product-detail');
+      // Lấy id sản phẩm từ địa chỉ trang (?id=...)
+      const id = new URLSearchParams(location.search).get('id');
+
+      // Hàm hiển thị thông báo lỗi kèm link quay lại danh sách
+      const showMsg = (text) => {
+        box.innerHTML = `<div class="pd-msg"><h2>${text}</h2>
+          <p style="margin-top:12px;"><a href="index.html#san-pham">Quay lại danh sách sản phẩm</a></p></div>`;
+      };
+
+      // Không có id trên địa chỉ -> báo chưa chọn sản phẩm
+      if (!id) return showMsg('Chưa chọn sản phẩm');
+
+      // Client riêng cho trang này (tên "sb" để không trùng biến "db" của main.js)
+      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      // Lấy 1 sản phẩm theo id từ bảng "products"
+      const { data: p, error } = await sb.from('products').select('*').eq('id', id).maybeSingle();
+
+      // Xử lý lỗi tải dữ liệu / không tìm thấy sản phẩm
+      if (error) { console.error(error.message); return showMsg('Không tải được sản phẩm'); }
+      if (!p)    return showMsg('Không tìm thấy sản phẩm');
+
+      // Đổi tiêu đề tab trình duyệt theo tên sản phẩm
+      document.title = p.name + ' - Green Soil';
+
+      // Ảnh: dùng cột "images" (mảng) nếu bảng có, không thì dùng image_url
+      const placeholder = 'https://placehold.co/600x600?text=Green+Soil';
+      let imgs = Array.isArray(p.images) && p.images.length ? p.images : [p.image_url];
+      imgs = imgs.filter(Boolean);              // bỏ giá trị rỗng
+      if (!imgs.length) imgs = [placeholder];   // không có ảnh nào -> dùng ảnh tạm
+
+      // Vẽ giao diện chi tiết sản phẩm
+      box.innerHTML = `
+        <!-- Đường dẫn Trang chủ / Sản phẩm / Tên -->
+        <div class="pd-crumbs">
+          <a href="index.html">Trang chủ</a> / <a href="index.html#san-pham">Sản phẩm</a> / ${esc(p.name)}
+        </div>
+
+        <section class="pd-grid">
+          <!-- Cột trái: ảnh lớn + ảnh nhỏ (chỉ hiện ảnh nhỏ khi có từ 2 ảnh trở lên) -->
+          <div>
+            <div class="pd-main-img"><img id="pd-img" src="${esc(imgs[0])}" alt="${esc(p.name)}"></div>
+            ${imgs.length > 1 ? `<div class="pd-thumbs">${imgs.map((src, i) =>
+              `<button type="button" data-i="${i}" aria-label="Xem ảnh ${i + 1}" aria-current="${i === 0}">
+                 <img src="${esc(src)}" alt=""></button>`).join('')}</div>` : ''}
+          </div>
+
+          <!-- Cột phải: nhãn, tên, giá -->
+          <div>
+            ${p.badge ? `<span class="pd-badge">${esc(p.badge)}</span>` : ''}
+            <h1>${esc(p.name)}</h1>
+            <p class="pd-price">${formatPrice(p.price)}</p>
+          </div>
+        </section>
+
+        <!-- Mô tả chi tiết sản phẩm -->
+        <section class="pd-desc">
+          <h2>Mô tả chi tiết</h2>
+          <p>${p.description ? esc(p.description) : 'Sản phẩm này chưa có mô tả.'}</p>
+        </section>`;
+
+      // Đổi ảnh lớn khi bấm ảnh nhỏ
+      document.querySelectorAll('.pd-thumbs button').forEach(btn => {
+        btn.onclick = () => {
+          // Thay ảnh lớn bằng ảnh vừa bấm
+          document.getElementById('pd-img').src = imgs[btn.dataset.i];
+          // Đánh dấu ảnh nhỏ đang chọn (để hiện viền xanh)
+          document.querySelectorAll('.pd-thumbs button')
+            .forEach(b => b.setAttribute('aria-current', b === btn));
+        };
+      });
+    });
+  </script>
+</body>
+</html>

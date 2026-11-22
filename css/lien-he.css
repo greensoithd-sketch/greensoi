@@ -1,0 +1,73 @@
+/* Khung chung của trang, căn giữa và giới hạn chiều rộng */
+.contact-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+/* Chia 2 cột: thông tin | form */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 24px;
+}
+
+/* Thẻ nền trắng bo góc cho cả 2 khối */
+.contact-info,
+.contact-form-box {
+  background: #fff;
+  border: 1px solid #d8e8d8;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+/* Danh sách thông tin liên hệ */
+#contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 14px;
+}
+#contact-list a {
+  color: #2e7d32;           /* xanh lá cho đồng bộ thương hiệu */
+  text-decoration: none;
+}
+#contact-list a:hover { text-decoration: underline; }
+
+/* Form */
+.contact-form-box label {
+  display: block;
+  margin: 12px 0 4px;
+  font-weight: 600;
+}
+.contact-form-box input,
+.contact-form-box textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #b8d0b8;
+  border-radius: 8px;
+  font: inherit;
+  box-sizing: border-box;
+}
+.contact-form-box button {
+  margin-top: 16px;
+  padding: 12px 24px;
+  background: #2e7d32;
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  font: inherit;
+  cursor: pointer;
+}
+.contact-form-box button:disabled { opacity: .6; cursor: not-allowed; }
+
+/* Thông báo trạng thái */
+#form-status { margin-top: 12px; min-height: 1.2em; }
+#form-status.ok  { color: #2e7d32; }
+#form-status.err { color: #c62828; }
+
+/* Điện thoại: xếp thành 1 cột */
+@media (max-width: 768px) {
+  .contact-grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin - Green Soil</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- Màn hình đăng nhập: hiện khi chưa đăng nhập -->
+  <div id="loginBox" class="login">
+    <h2>Đăng nhập quản trị</h2>
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Mật khẩu">
+    <button id="btnLogin">Đăng nhập</button>
+    <p id="loginMsg" class="msg"></p>
+  </div>
+
+  <!-- Khu quản trị: chỉ hiện sau khi đăng nhập -->
+  <div id="app" class="app hidden">
+
+    <!-- Menu dọc bên trái -->
+    <aside class="sidebar">
+      <h3>Green Soil</h3>
+      <a href="#" data-tab="products" class="active">Sản phẩm</a>
+      <a href="#" data-tab="about">Giới thiệu</a>
+      <a href="#" data-tab="contact">Liên hệ</a>
+      <a href="#" data-tab="orders">Giỏ hàng / Đơn hàng</a>
+      <button id="btnLogout">Đăng xuất</button>
+    </aside>
+
+    <!-- Nội dung bên phải, JS sẽ vẽ vào đây -->
+    <main id="content" class="content"></main>
+  </div>
+
+  <!-- Thư viện Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

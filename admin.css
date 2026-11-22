@@ -1,0 +1,45 @@
+/* Đặt lại lề mặc định và font chữ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; background: #f3f5ef; color: #222; }
+.hidden { display: none !important; }
+
+/* Khung đăng nhập căn giữa màn hình */
+.login { max-width: 340px; margin: 100px auto; background: #fff; padding: 28px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+.login h2 { margin-bottom: 16px; color: #2e7d32; }
+
+/* Ô nhập và nút dùng chung */
+input, textarea, select { width: 100%; padding: 10px; margin: 6px 0 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; }
+button { padding: 10px 16px; border: 0; border-radius: 8px; background: #2e7d32; color: #fff; font-size: 15px; cursor: pointer; }
+button:hover { background: #256528; }
+button.danger { background: #c62828; }
+button.gray { background: #777; }
+.msg { color: #c62828; margin-top: 8px; }
+
+/* Bố cục 2 cột: menu trái + nội dung phải */
+.app { display: flex; min-height: 100vh; }
+.sidebar { width: 220px; background: #2e7d32; padding: 20px; display: flex; flex-direction: column; gap: 6px; }
+.sidebar h3 { color: #fff; margin-bottom: 14px; }
+.sidebar a { color: #e8f5e9; text-decoration: none; padding: 10px 12px; border-radius: 8px; }
+.sidebar a:hover, .sidebar a.active { background: rgba(255,255,255,.2); color: #fff; }
+.sidebar button { margin-top: auto; background: #1b5e20; }
+.content { flex: 1; padding: 28px; }
+.content h2 { margin-bottom: 18px; color: #2e7d32; }
+
+/* Bảng dữ liệu */
+table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; }
+th, td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; vertical-align: middle; }
+th { background: #e8f5e9; }
+td img { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; }
+td button { margin-right: 6px; padding: 6px 10px; font-size: 13px; }
+
+/* Form thêm / sửa */
+.card { background: #fff; padding: 20px; border-radius: 12px; margin-bottom: 20px; max-width: 560px; }
+label { font-weight: bold; font-size: 14px; }
+
+/* ===== Tab Giới thiệu ===== */
+.card.wide { max-width: 900px; }
+.card h3 { color: #2e7d32; margin-bottom: 10px; }
+.about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.about-box { border: 1px solid #e0e6dc; border-radius: 10px; padding: 14px; }
+.about-prev { max-width: 180px; border-radius: 8px; display: block; margin: 6px 0; }
+@media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; } }
